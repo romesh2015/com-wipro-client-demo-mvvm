@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Wipro Assignment MVVM</string>
+    <string name="title_name">Title not found to</string>
+    <string name="internet_connection">Internet not found!</string>
+    <string name="select">Select</string>
+    <string name="refresh_call">Swipe to Refresh Called</string>
 </resources>
