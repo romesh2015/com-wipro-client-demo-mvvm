@@ -1,4 +1,5 @@
 package com.wipro.assignment.mvvm.view.activity.fragment
+
 import android.os.Bundle
 import android.os.Handler
 import android.view.LayoutInflater
@@ -13,7 +14,6 @@ import com.wipro.assignment.mvvm.db.AboutListDao
 import com.wipro.assignment.mvvm.di.factory.ViewModelFactory
 import com.wipro.assignment.mvvm.network.api.CoroutinesDispatcherProvider
 import com.wipro.assignment.mvvm.repository.data.AboutList
-import com.wipro.assignment.mvvm.utility.Constants
 import com.wipro.assignment.mvvm.utility.Constants.TITLE
 import com.wipro.assignment.mvvm.utility.SharedPrefsHelper
 import com.wipro.assignment.mvvm.utility.Tracer
@@ -28,9 +28,11 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class AboutListFragment : DaggerFragment(){
+@Suppress("DEPRECATION")
+class AboutListFragment : DaggerFragment() {
     val TAG = "AboutActivity"
     private val mainActivityViewModel: AboutActivityViewModel by viewModels { viewModelFactory }
+
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
 
@@ -47,13 +49,14 @@ class AboutListFragment : DaggerFragment(){
     ): View? {
         return inflater.inflate(R.layout.fragment_about_list, container, false)
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         // swipe to refresh called
         swiperefresh.setOnRefreshListener {
             callRefreshData()
             Handler().postDelayed(Runnable {
-                swiperefresh.setRefreshing(false)
+                swiperefresh.isRefreshing = false
             }, 4000) // Delay in millis
 
         }
@@ -63,8 +66,9 @@ class AboutListFragment : DaggerFragment(){
             android.R.color.holo_green_light,
             android.R.color.holo_orange_light,
             android.R.color.holo_red_light
-        );
+        )
     }
+
     fun callRefreshData() {
         Tracer.info(TAG, getString(R.string.refresh_call))
         observeViewState()
@@ -107,14 +111,14 @@ class AboutListFragment : DaggerFragment(){
     // Update the list data here
     private fun showData(data: List<AboutList>) {
         removeProgressDialog()
-        progress_circular.visibility = View.GONE
-        recyclerview.visibility = View.VISIBLE
-        recyclerview.layoutManager = LinearLayoutManager(activity)
-        recyclerview.setHasFixedSize(true)
-        val tile= SharedPrefsHelper
-        toolbar.setTitle(tile.getInstance()!!.get<String>(TITLE))
+        progress_circular?.visibility = View.GONE
+        recyclerview?.visibility = View.VISIBLE
+        recyclerview?.layoutManager = LinearLayoutManager(activity)
+        recyclerview?.setHasFixedSize(true)
+        val tile = SharedPrefsHelper
+        toolbar_fragment?.title = tile.getInstance()!!.get<String>(TITLE)
         adapter = AboutAdapter(data, this.activity)
-        recyclerview.adapter = adapter
+        recyclerview?.adapter = adapter
     }
 
     private fun showError(error: Throwable) {
@@ -123,7 +127,7 @@ class AboutListFragment : DaggerFragment(){
     }
 
     private fun removeProgressDialog() {
-        progress_circular.visibility = View.GONE
+        progress_circular?.visibility = View.GONE
     }
 
 

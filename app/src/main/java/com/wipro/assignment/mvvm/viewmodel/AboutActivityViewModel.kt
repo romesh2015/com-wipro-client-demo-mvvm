@@ -9,7 +9,6 @@ import com.wipro.assignment.mvvm.R
 import com.wipro.assignment.mvvm.db.AboutListDao
 import com.wipro.assignment.mvvm.network.api.ApiClient
 import com.wipro.assignment.mvvm.network.api.CoroutinesDispatcherProvider
-import com.wipro.assignment.mvvm.utility.Constants
 import com.wipro.assignment.mvvm.utility.Constants.TITLE
 import com.wipro.assignment.mvvm.utility.SharedPrefsHelper
 import com.wipro.assignment.mvvm.utility.Utility

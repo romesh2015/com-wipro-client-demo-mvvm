@@ -15,11 +15,13 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:padding="@dimen/dimen_8dp">
+            android:paddingLeft="@dimen/dimen_8dp"
+            android:paddingRight="@dimen/dimen_8dp">
 
             <ImageView
-                android:id="@+id/image"
+                android:id="@+id/image_adapter"
                 android:layout_width="@dimen/dimen_image_width"
+                android:layout_marginTop="@dimen/dimen_16dp"
                 android:layout_height="@dimen/dimen_image_height"
                 android:layout_alignParentRight="true"
                 android:layout_gravity="center_horizontal"
@@ -29,20 +31,22 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_toLeftOf="@+id/image"
+                android:layout_toLeftOf="@+id/image_adapter"
                 android:orientation="vertical"
                 android:paddingRight="5dp">
 
                 <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/title"
+                    android:id="@+id/title_adapter"
                     android:layout_width="wrap_content"
+                    android:paddingRight="@dimen/dimen_8dp"
+                    android:paddingTop="@dimen/dimen_8dp"
                     android:layout_height="wrap_content"
                     android:textColor="@color/grey_color"
                     android:textSize="@dimen/dimen_text_size_title"
                     android:textStyle="bold" />
 
                 <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/detail"
+                    android:id="@+id/detail_adapter"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/album_name"

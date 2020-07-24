@@ -1,4 +1,5 @@
 package com.wipro.assignment.mvvm.view.activity.adapter
+
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,13 +11,16 @@ import com.wipro.assignment.mvvm.R
 import com.wipro.assignment.mvvm.repository.data.AboutList
 import com.wipro.assignment.mvvm.utility.Utility
 import kotlinx.android.synthetic.main.layot_custom_view.view.*
+
 class AboutAdapter(
     aboutList: List<AboutList>, private val interaction: FragmentActivity? = null
 ) : RecyclerView.Adapter<AboutAdapter.ViewHolder>() {
     private val about = mutableListOf<AboutList>()
+
     init {
         about.addAll(aboutList)
     }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val view = inflater.inflate(R.layout.layot_custom_view, parent, false)
@@ -32,6 +36,7 @@ class AboutAdapter(
         holder.bind(about = about[position])
 
     }
+
     class ViewHolder(
         itemView: View,
         private val interaction: FragmentActivity?
@@ -40,21 +45,21 @@ class AboutAdapter(
 
         fun bind(about: AboutList) {
 
-            if(about.title==null && about.description==null&& about.imageHref==null){
-                itemView.title.visibility=View.GONE
-                itemView.detail.visibility=View.GONE
-                itemView.image.visibility=View.GONE
-            }else{
-                itemView.visibility=View.VISIBLE
-                if(Utility.isConnected()){
-                    itemView.title.text = about.title
-                    itemView.detail.text=about.description
+            if (about.title == null && about.description == null && about.imageHref == null) {
+                itemView.title_adapter.visibility = View.GONE
+                itemView.detail_adapter.visibility = View.GONE
+                itemView.image_adapter.visibility = View.GONE
+            } else {
+                itemView.visibility = View.VISIBLE
+                if (Utility.isConnected()) {
+                    itemView.title_adapter.text = about.title
+                    itemView.detail_adapter.text = about.description
                     Glide
                         .with(itemView)
                         .load(about.imageHref)
-                        .into(itemView.image);
+                        .into(itemView.image_adapter)
                     itemView.setOnClickListener {
-                        Toast.makeText(interaction,about.title,Toast.LENGTH_SHORT).show()
+                        Toast.makeText(interaction, about.title, Toast.LENGTH_SHORT).show()
                     }
                 }
             }
