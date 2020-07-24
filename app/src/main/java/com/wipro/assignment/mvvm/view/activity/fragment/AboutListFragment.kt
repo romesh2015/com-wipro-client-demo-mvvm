@@ -14,6 +14,8 @@ import com.wipro.assignment.mvvm.di.factory.ViewModelFactory
 import com.wipro.assignment.mvvm.network.api.CoroutinesDispatcherProvider
 import com.wipro.assignment.mvvm.repository.data.AboutList
 import com.wipro.assignment.mvvm.utility.Constants
+import com.wipro.assignment.mvvm.utility.Constants.TITLE
+import com.wipro.assignment.mvvm.utility.SharedPrefsHelper
 import com.wipro.assignment.mvvm.utility.Tracer
 import com.wipro.assignment.mvvm.utility.showToast
 import com.wipro.assignment.mvvm.view.activity.adapter.AboutAdapter
@@ -109,7 +111,8 @@ class AboutListFragment : DaggerFragment(){
         recyclerview.visibility = View.VISIBLE
         recyclerview.layoutManager = LinearLayoutManager(activity)
         recyclerview.setHasFixedSize(true)
-        toolbar.setTitle(Constants.abutTitle)
+        val tile= SharedPrefsHelper
+        toolbar.setTitle(tile.getInstance()!!.get<String>(TITLE))
         adapter = AboutAdapter(data, this.activity)
         recyclerview.adapter = adapter
     }
