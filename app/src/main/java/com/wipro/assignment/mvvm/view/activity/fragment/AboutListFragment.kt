@@ -1,60 +1,127 @@
 package com.wipro.assignment.mvvm.view.activity.fragment
-
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.wipro.assignment.mvvm.R
+import com.wipro.assignment.mvvm.db.AboutListDao
+import com.wipro.assignment.mvvm.di.factory.ViewModelFactory
+import com.wipro.assignment.mvvm.network.api.CoroutinesDispatcherProvider
+import com.wipro.assignment.mvvm.repository.data.AboutList
+import com.wipro.assignment.mvvm.utility.Constants
+import com.wipro.assignment.mvvm.utility.Tracer
+import com.wipro.assignment.mvvm.utility.showToast
+import com.wipro.assignment.mvvm.view.activity.adapter.AboutAdapter
+import com.wipro.assignment.mvvm.viewmodel.AboutActivityViewModel
+import com.wipro.assignment.mvvm.viewmodel.AboutActivityViewState
+import dagger.android.support.DaggerFragment
+import kotlinx.android.synthetic.main.fragment_about_list.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+class AboutListFragment : DaggerFragment(){
+    val TAG = "AboutActivity"
+    private val mainActivityViewModel: AboutActivityViewModel by viewModels { viewModelFactory }
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
 
-/**
- * A simple [Fragment] subclass.
- * Use the [AboutListFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class AboutListFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    @Inject
+    lateinit var aboutDao: AboutListDao
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+    @Inject
+    lateinit var coroutinesDispatcherProvider: CoroutinesDispatcherProvider
+    lateinit var adapter: AboutAdapter
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        return inflater.inflate(R.layout.fragment_about_list, container, false)
+    }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        // swipe to refresh called
+        swiperefresh.setOnRefreshListener {
+            callRefreshData()
+            Handler().postDelayed(Runnable {
+                swiperefresh.setRefreshing(false)
+            }, 4000) // Delay in millis
+
+        }
+        // provide the custom color to swipe refresh
+        swiperefresh.setColorSchemeResources(
+            android.R.color.holo_blue_bright,
+            android.R.color.holo_green_light,
+            android.R.color.holo_orange_light,
+            android.R.color.holo_red_light
+        );
+    }
+    fun callRefreshData() {
+        Tracer.info(TAG, getString(R.string.refresh_call))
+        observeViewState()
+        observeUsersInDatabase()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        callRefreshData()
+    }
+
+    private fun observeViewState() {
+        activity?.let {
+            mainActivityViewModel.state.observe(it, Observer { state ->
+                when (state) {
+                    is AboutActivityViewState.ShowLoading -> {
+                        showLoading()
+                    }
+                    is AboutActivityViewState.ShowError -> {
+                        showError(state.error)
+                    }
+                }
+            })
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_about_list, container, false)
+    // Aoi call from here
+    private fun observeUsersInDatabase() {
+        CoroutineScope(coroutinesDispatcherProvider.main).launch {
+            aboutDao.getAllAboutData().collect { users ->
+                showData(users)
+            }
+        }
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment AboutListFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            AboutListFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    private fun showLoading() {
+        progress_circular.visibility = View.VISIBLE
     }
+
+    // Update the list data here
+    private fun showData(data: List<AboutList>) {
+        removeProgressDialog()
+        progress_circular.visibility = View.GONE
+        recyclerview.visibility = View.VISIBLE
+        recyclerview.layoutManager = LinearLayoutManager(activity)
+        recyclerview.setHasFixedSize(true)
+        toolbar.setTitle(Constants.abutTitle)
+        adapter = AboutAdapter(data, this.activity)
+        recyclerview.adapter = adapter
+    }
+
+    private fun showError(error: Throwable) {
+        removeProgressDialog()
+        activity?.showToast(error.message, Toast.LENGTH_LONG)
+    }
+
+    private fun removeProgressDialog() {
+        progress_circular.visibility = View.GONE
+    }
+
+
 }

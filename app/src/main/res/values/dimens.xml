@@ -7,6 +7,7 @@
     <dimen name="dimen_8dp">8dp</dimen>
     <dimen name="dimen_image_height">120dp</dimen>
     <dimen name="dimen_image_width">120dp</dimen>
-    <dimen name="dimen_text_size_title">20sp</dimen>
+    <dimen name="dimen_text_size_title">22sp</dimen>
+    <dimen name="dimen_text_size_detail">20sp</dimen>
 
 </resources>

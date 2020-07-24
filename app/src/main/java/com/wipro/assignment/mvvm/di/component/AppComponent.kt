@@ -10,7 +10,7 @@ import javax.inject.Named
 import javax.inject.Singleton
 @Singleton
 @Component(    modules = [AndroidSupportInjectionModule::class, ActivityBuilderModule::class,
-        AppModule::class, ApiModule::class, ViewModelFactoryModule::class, DatabaseModule::class]
+        AppModule::class, ApiModule::class, ViewModelFactoryModule::class, DatabaseModule::class,FragmentBuilderModule::class]
 )
 interface AppComponent : AndroidInjector<DaggerBindingApplication> {
 
