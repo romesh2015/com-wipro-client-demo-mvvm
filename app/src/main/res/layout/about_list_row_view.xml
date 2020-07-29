@@ -22,8 +22,10 @@
                 android:id="@+id/image_adapter"
                 android:layout_width="@dimen/dimen_image_width"
                 android:layout_marginTop="@dimen/dimen_16dp"
+                android:layout_marginBottom="@dimen/dimen_16dp"
                 android:layout_height="@dimen/dimen_image_height"
                 android:layout_alignParentRight="true"
+                android:src="@mipmap/ic_launcher"
                 android:layout_gravity="center_horizontal"
                 android:gravity="right"
                 />

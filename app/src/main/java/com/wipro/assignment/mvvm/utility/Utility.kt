@@ -1,14 +1,14 @@
 package com.wipro.assignment.mvvm.utility
 import android.content.Context
 import android.net.ConnectivityManager
-import com.wipro.assignment.mvvm.DaggerBindingApplication
+import com.wipro.assignment.mvvm.DemoApplication
 
 object Utility {
     fun isConnected(): Boolean {
         var connected = false
         try {
             val cm =
-                DaggerBindingApplication.getsAppContext()
+                DemoApplication.getsAppContext()
                     .getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
             val nInfo = cm.activeNetworkInfo
             connected = nInfo != null && nInfo.isAvailable && nInfo.isConnected

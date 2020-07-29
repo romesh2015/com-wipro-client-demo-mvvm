@@ -1,7 +1,7 @@
 package com.wipro.assignment.mvvm.utility
 import android.content.Context
 import android.content.SharedPreferences
-import com.wipro.assignment.mvvm.DaggerBindingApplication
+import com.wipro.assignment.mvvm.DemoApplication
 class SharedPrefsHelper private constructor() {
     private val sharedPreferences: SharedPreferences
     fun delete(key: String?): Boolean {
@@ -65,6 +65,6 @@ class SharedPrefsHelper private constructor() {
 
     init {
         instance = this
-        sharedPreferences = DaggerBindingApplication.getsAppContext()!!.getSharedPreferences(SHARED_PREFS_NAME, Context.MODE_PRIVATE)
+        sharedPreferences = DemoApplication.getsAppContext()!!.getSharedPreferences(SHARED_PREFS_NAME, Context.MODE_PRIVATE)
     }
 }

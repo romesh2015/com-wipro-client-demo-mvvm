@@ -1,47 +1,30 @@
 package com.wipro.assignment.mvvm.view.activity.fragment
-
 import android.os.Bundle
 import android.os.Handler
+import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.wipro.assignment.mvvm.R
-import com.wipro.assignment.mvvm.db.AboutListDao
-import com.wipro.assignment.mvvm.di.factory.ViewModelFactory
-import com.wipro.assignment.mvvm.network.api.CoroutinesDispatcherProvider
-import com.wipro.assignment.mvvm.repository.data.AboutList
+import com.wipro.assignment.mvvm.model.AboutList
 import com.wipro.assignment.mvvm.utility.Constants.TITLE
 import com.wipro.assignment.mvvm.utility.SharedPrefsHelper
 import com.wipro.assignment.mvvm.utility.Tracer
-import com.wipro.assignment.mvvm.utility.showToast
+import com.wipro.assignment.mvvm.view.activity.ItemClickListener
 import com.wipro.assignment.mvvm.view.activity.adapter.AboutAdapter
-import com.wipro.assignment.mvvm.viewmodel.AboutActivityViewModel
-import com.wipro.assignment.mvvm.viewmodel.AboutActivityViewState
-import dagger.android.support.DaggerFragment
+import com.wipro.assignment.mvvm.viewmodel.AboutViewModel
+import com.wipro.assignment.mvvm.viewmodel.AboutViewModelFactory
 import kotlinx.android.synthetic.main.fragment_about_list.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
-import javax.inject.Inject
-
 @Suppress("DEPRECATION")
-class AboutListFragment : DaggerFragment() {
+class AboutListFragment : Fragment(), ItemClickListener {
     val TAG = "AboutActivity"
-    private val mainActivityViewModel: AboutActivityViewModel by viewModels { viewModelFactory }
-
-    @Inject
-    lateinit var viewModelFactory: ViewModelFactory
-
-    @Inject
-    lateinit var aboutDao: AboutListDao
-
-    @Inject
-    lateinit var coroutinesDispatcherProvider: CoroutinesDispatcherProvider
-    lateinit var adapter: AboutAdapter
+    lateinit var aboutViewModel : AboutViewModel
+    private var aboutAdapter: AboutAdapter?=null
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -52,12 +35,17 @@ class AboutListFragment : DaggerFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initViewModel()
+        initAdapter()
+        observeViewModel()
+        aboutViewModel.getData()
+
         // swipe to refresh called
         swiperefresh.setOnRefreshListener {
-            callRefreshData()
+            aboutViewModel.getData()
             Handler().postDelayed(Runnable {
                 swiperefresh.isRefreshing = false
-            }, 4000) // Delay in millis
+            }, getString(R.string.stop_interval).toLong()) // Delay in millis
 
         }
         // provide the custom color to swipe refresh
@@ -69,66 +57,58 @@ class AboutListFragment : DaggerFragment() {
         )
     }
 
-    fun callRefreshData() {
-        Tracer.info(TAG, getString(R.string.refresh_call))
-        observeViewState()
-        observeUsersInDatabase()
-    }
-
     override fun onStart() {
         super.onStart()
-        callRefreshData()
+
     }
 
-    private fun observeViewState() {
-        activity?.let {
-            mainActivityViewModel.state.observe(it, Observer { state ->
-                when (state) {
-                    is AboutActivityViewState.ShowLoading -> {
-                        showLoading()
-                    }
-                    is AboutActivityViewState.ShowError -> {
-                        showError(state.error)
-                    }
-                }
-            })
-        }
-    }
-
-    // Aoi call from here
-    private fun observeUsersInDatabase() {
-        CoroutineScope(coroutinesDispatcherProvider.main).launch {
-            aboutDao.getAllAboutData().collect { users ->
-                showData(users)
-            }
-        }
-    }
-
-    private fun showLoading() {
+    private fun initViewModel(){
         progress_circular.visibility = View.VISIBLE
+        var aboutViewModelFactory = AboutViewModelFactory()
+        aboutViewModel = ViewModelProviders.of(this, aboutViewModelFactory).get(AboutViewModel::class.java)
     }
 
-    // Update the list data here
-    private fun showData(data: List<AboutList>) {
-        removeProgressDialog()
-        progress_circular?.visibility = View.GONE
-        recyclerview?.visibility = View.VISIBLE
-        recyclerview?.layoutManager = LinearLayoutManager(activity)
-        recyclerview?.setHasFixedSize(true)
-        val tile = SharedPrefsHelper
-        toolbar_fragment?.title = tile.getInstance()!!.get<String>(TITLE)
-        adapter = AboutAdapter(data, this.activity)
-        recyclerview?.adapter = adapter
+    private fun initAdapter(){
+        aboutAdapter = AboutAdapter(arrayListOf(), this@AboutListFragment.requireActivity(),this)
+        recyclerview.apply {
+            layoutManager = LinearLayoutManager(context)
+            adapter = aboutAdapter
+        }
+    }
+    override fun onResume() {
+        super.onResume()
+
     }
 
-    private fun showError(error: Throwable) {
-        removeProgressDialog()
-        activity?.showToast(error.message, Toast.LENGTH_LONG)
-    }
+    private fun observeViewModel(){
+        aboutViewModel.fetchAboutLiveData()?.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                aboutAdapter?.refreshAdapter(it)
+                val tile = SharedPrefsHelper
+                toolbar_fragment?.title = tile.getInstance()!!.get<String>(TITLE)
+            }
+        })
 
-    private fun removeProgressDialog() {
-        progress_circular?.visibility = View.GONE
-    }
+        aboutViewModel.fetchLoadStatus().observe(viewLifecycleOwner, Observer {
+            if(!it){
+                println(it)
+                progress_circular.visibility  = View.GONE
+            }
+        })
 
+        aboutViewModel.fetchError().observe(viewLifecycleOwner, Observer {
+            it?.let {
+                if(!TextUtils.isEmpty(it)){
+                    progress_circular.visibility = View.GONE
+                    Toast.makeText(context,"$it", Toast.LENGTH_LONG).show()
+                }
+
+            }
+        })
+    }
+    override fun setClickedInfo(aboutList: AboutList) {
+        Tracer.debug(TAG,aboutList.description)
+        Toast.makeText(context, aboutList.title, Toast.LENGTH_SHORT).show()
+    }
 
 }
