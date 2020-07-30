@@ -5,6 +5,6 @@
 
     <fragment
         android:id="@+id/aboutListFragment"
-        android:name="com.wipro.assignment.mvvm.view.activity.fragment.AboutListFragment"
+        android:name="com.wipro.assignment.mvvm.about.view.fragment.AboutListFragment"
         android:label="AboutListFragment" />
 </navigation>

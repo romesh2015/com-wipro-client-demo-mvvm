@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/list_fragment_layout"
+    android:id="@+id/fragment_about_main_layout"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/backround_color"
-    tools:context="com.wipro.assignment.mvvm.view.activity.AboutActivity">
+    tools:context="com.wipro.assignment.mvvm.about.view.AboutActivity">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar_fragment"
+        android:id="@+id/fragment_about_toolbar_fragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?attr/colorPrimary"
@@ -18,29 +18,26 @@
         tools:ignore="MissingConstraints"></androidx.appcompat.widget.Toolbar>
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/swiperefresh"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:id="@+id/fragment_about_swipe_fresh"
+        android:layout_width="@dimen/dimen_0dp"
+        android:layout_height="@dimen/dimen_0dp"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar_fragment">
-
+        app:layout_constraintTop_toBottomOf="@+id/fragment_about_toolbar_fragment">
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerview"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:id="@+id/fragment_about_recyclerview"
+            android:layout_width="@dimen/dimen_0dp"
+            android:layout_height="@dimen/dimen_0dp"
             android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/toolbar" />
-
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-
     <ProgressBar
-        android:id="@+id/progress_circular"
+        android:id="@+id/fragment_about_progress_circular"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone"
@@ -48,5 +45,4 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

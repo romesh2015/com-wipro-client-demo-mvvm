@@ -2,6 +2,7 @@ package com.wipro.assignment.mvvm.utility
 import android.content.Context
 import android.content.SharedPreferences
 import com.wipro.assignment.mvvm.DemoApplication
+// In this class we are storing the app session if required in app.
 class SharedPrefsHelper private constructor() {
     private val sharedPreferences: SharedPreferences
     fun delete(key: String?): Boolean {
@@ -11,7 +12,6 @@ class SharedPrefsHelper private constructor() {
         }
         return result
     }
-
     fun save(key: String?, value: Any?) {
         val editor = editor
         if (value is Boolean) {
@@ -31,23 +31,18 @@ class SharedPrefsHelper private constructor() {
         }
         editor.commit()
     }
-
     operator fun <T> get(key: String?): T? {
         return sharedPreferences.all[key] as T?
     }
-
     operator fun <T> get(key: String?, defValue: T): T {
         val returnValue = sharedPreferences.all[key] as T?
         return returnValue ?: defValue
     }
-
     fun has(key: String?): Boolean {
         return sharedPreferences.contains(key)
     }
-
     private val editor: SharedPreferences.Editor
         private get() = sharedPreferences.edit()
-
     companion object {
         private const val TAG = "SharedPrefsHelper"
         private const val SHARED_PREFS_NAME = "TestData"
@@ -62,7 +57,6 @@ class SharedPrefsHelper private constructor() {
             return instance
         }
     }
-
     init {
         instance = this
         sharedPreferences = DemoApplication.getsAppContext()!!.getSharedPreferences(SHARED_PREFS_NAME, Context.MODE_PRIVATE)

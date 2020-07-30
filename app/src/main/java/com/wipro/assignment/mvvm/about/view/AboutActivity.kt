@@ -1,7 +1,8 @@
-package com.wipro.assignment.mvvm.view.activity
+package com.wipro.assignment.mvvm.about.view
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.wipro.assignment.mvvm.R
+// Thus is launcher activity of application
 class AboutActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -1,8 +1,9 @@
+@file:Suppress("DEPRECATION")
 package com.wipro.assignment.mvvm.utility
 import android.content.Context
 import android.net.ConnectivityManager
 import com.wipro.assignment.mvvm.DemoApplication
-
+// In this object we are checking for internet connection status.
 object Utility {
     fun isConnected(): Boolean {
         var connected = false

@@ -1,5 +1,6 @@
 package com.wipro.assignment.mvvm.utility
 import android.util.Log
+// In this class we have written the common functions to handle the logs in whole app.
 object Tracer {
     private const val LOG_ENABLE = true
     fun debug(TAG: String, message: String?) {
@@ -9,7 +10,6 @@ object Tracer {
             }
         }
     }
-
     @JvmStatic
     fun info(TAG: String, message: String?) {
         if (LOG_ENABLE) {
@@ -18,7 +18,6 @@ object Tracer {
             }
         }
     }
-
     @JvmStatic
     fun warning(TAG: String, message: String?) {
         if (LOG_ENABLE) {

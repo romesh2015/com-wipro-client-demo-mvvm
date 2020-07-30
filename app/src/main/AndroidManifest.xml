@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:usesCleartextTraffic="true"
         android:theme="@style/AppTheme">
-        <activity android:screenOrientation="sensor" android:name=".view.activity.AboutActivity">
+        <activity android:screenOrientation="sensor" android:name="com.wipro.assignment.mvvm.about.view.AboutActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

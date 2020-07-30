@@ -1,9 +1,7 @@
 package com.wipro.assignment.mvvm
 import android.app.Application
 import android.content.Context
-import com.wipro.assignment.mvvm.utility.AppConfig
-import dagger.android.AndroidInjector
-import dagger.android.DaggerApplication
+// This is application level class that used to handle application context.
 class DemoApplication : Application() {
     override fun onCreate() {
         super.onCreate()

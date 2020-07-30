@@ -1,7 +1,4 @@
-package com.wipro.assignment.mvvm.view.activity
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.whenResumed
-import androidx.test.annotation.UiThreadTest
+package com.wipro.assignment.mvvm.about.view
 import androidx.test.core.app.launchActivity
 import androidx.test.espresso.Espresso
 import androidx.test.espresso.assertion.ViewAssertions
@@ -13,10 +10,11 @@ import androidx.test.runner.AndroidJUnit4
 import com.wipro.assignment.mvvm.R
 import org.junit.After
 import org.junit.Before
-import org.junit.Test
-import org.junit.Assert.*
 import org.junit.Rule
+import org.junit.Test
 import org.junit.runner.RunWith
+// Here i have written activity related test cases so if name convention written correctly then no
+// need any function level comments here.
 @Suppress("DEPRECATION")
 @SuppressWarnings( "deprecation" )
 @RunWith(AndroidJUnit4::class)
