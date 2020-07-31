@@ -1,6 +1,8 @@
 package com.wipro.assignment.mvvm.about.model
 import com.google.gson.annotations.SerializedName
-// This is data class is used store the data in objects.
+/**
+ * This is data class is used store the data in objects.
+ */
 data class AboutApiResponse(
     @SerializedName("title") val title: String,
     @SerializedName("rows") val rows: List<AboutList>)

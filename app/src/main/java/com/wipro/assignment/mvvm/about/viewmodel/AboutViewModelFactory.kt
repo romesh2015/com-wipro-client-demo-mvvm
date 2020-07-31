@@ -6,8 +6,9 @@ import com.wipro.assignment.mvvm.network.api.ApiClient
 import kotlinx.coroutines.Dispatchers
 import retrofit2.Retrofit
 import javax.inject.Inject
-
-// This view model factory its deal with dagger module and component
+/**
+ * This view model factory its deal with dagger module and component
+ */
 class AboutViewModelFactory: ViewModelProvider.Factory {
     @Inject
     lateinit var retrofit: Retrofit

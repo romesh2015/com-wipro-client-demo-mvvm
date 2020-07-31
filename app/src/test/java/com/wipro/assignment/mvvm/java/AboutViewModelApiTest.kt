@@ -19,9 +19,11 @@ import org.mockito.MockitoAnnotations
 import org.mockito.junit.MockitoJUnitRunner
 import retrofit2.Response
 import retrofit2.Retrofit
-// Here we can tests the view model negative and positive cases but in this apis only provide static
-// link, if provide some argument then we can test that. So data will come in each case here
-// if internet available.
+/**
+ * Here we can tests the view model negative and positive cases but in this apis only provide static
+ * link, if provide some argument then we can test that. So data will come in each case here
+ * if internet available.
+ */
 @RunWith(MockitoJUnitRunner::class)
 @ExperimentalCoroutinesApi
 class AboutViewModelApiTest{

@@ -1,6 +1,8 @@
 package com.wipro.assignment.mvvm.utility
 import android.util.Log
-// In this class we have written the common functions to handle the logs in whole app.
+/**
+ * In this class we have written the common functions to handle the logs in whole app.
+ */
 object Tracer {
     private const val LOG_ENABLE = true
     fun debug(TAG: String, message: String?) {

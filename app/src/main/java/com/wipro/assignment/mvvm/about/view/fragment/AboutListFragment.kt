@@ -21,7 +21,10 @@ import com.wipro.assignment.mvvm.about.view.adapter.AboutAdapter
 import com.wipro.assignment.mvvm.about.viewmodel.AboutViewModel
 import com.wipro.assignment.mvvm.about.viewmodel.AboutViewModelFactory
 import kotlinx.android.synthetic.main.fragment_about_list.*
-// This fragment is showing the list data with adapter.
+
+/**
+ * This fragment is showing the list data with adapter.
+ */
 @Suppress("DEPRECATION")
 class AboutListFragment : Fragment(), ItemClickListener {
     val TAG = "AboutListFragment"

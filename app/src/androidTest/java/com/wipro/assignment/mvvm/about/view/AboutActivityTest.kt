@@ -13,8 +13,10 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-// Here i have written activity related test cases so if name convention written correctly then no
-// need any function level comments here.
+/**
+ * Here i have written activity related test cases so if name convention written correctly then no
+ * need any function level comments here.
+ */
 @Suppress("DEPRECATION")
 @SuppressWarnings( "deprecation" )
 @RunWith(AndroidJUnit4::class)

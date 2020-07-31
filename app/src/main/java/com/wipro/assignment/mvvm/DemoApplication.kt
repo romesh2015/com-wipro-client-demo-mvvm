@@ -1,7 +1,9 @@
 package com.wipro.assignment.mvvm
 import android.app.Application
 import android.content.Context
-// This is application level class that used to handle application context.
+/**
+ * This is application level class that used to handle application context.
+ */
 class DemoApplication : Application() {
     override fun onCreate() {
         super.onCreate()

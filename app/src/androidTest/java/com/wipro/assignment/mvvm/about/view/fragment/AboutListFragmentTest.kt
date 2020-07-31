@@ -12,8 +12,10 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-// Here we have tested Fragment ui related cased and name convention already show the purpose of
- // function no need to write class function level comments here.
+/**
+ * Here we have tested Fragment ui related cased and name convention already show the purpose of
+ * function no need to write class function level comments here.
+ */
 @Suppress("DEPRECATION")
 @SuppressWarnings( "deprecation" )
 @RunWith(AndroidJUnit4::class)

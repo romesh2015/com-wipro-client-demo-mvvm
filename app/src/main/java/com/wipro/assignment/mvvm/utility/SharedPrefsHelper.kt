@@ -2,7 +2,9 @@ package com.wipro.assignment.mvvm.utility
 import android.content.Context
 import android.content.SharedPreferences
 import com.wipro.assignment.mvvm.DemoApplication
-// In this class we are storing the app session if required in app.
+/**
+ * In this class we are storing the app session if required in app.
+ */
 class SharedPrefsHelper private constructor() {
     private val sharedPreferences: SharedPreferences
     fun delete(key: String?): Boolean {

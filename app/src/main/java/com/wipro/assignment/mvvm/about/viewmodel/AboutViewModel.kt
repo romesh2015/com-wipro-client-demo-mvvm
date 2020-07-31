@@ -7,7 +7,9 @@ import com.wipro.assignment.mvvm.utility.SharedPrefsHelper
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-// This About view model class handle network operation for app and testing purpose both.
+/**
+ * This About view model class handle network operation for app and testing purpose both.
+ */
 class AboutViewModel
 @Inject constructor(private val coroutinesDispatcher: CoroutineDispatcher,
                     private val apiClient : ApiClient

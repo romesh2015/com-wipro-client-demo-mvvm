@@ -10,7 +10,9 @@ import com.wipro.assignment.mvvm.about.model.AboutList
 import com.wipro.assignment.mvvm.utility.Utility
 import com.wipro.assignment.mvvm.about.view.ItemClickListener
 import kotlinx.android.synthetic.main.about_list_row_view.view.*
-// Thus is the list adapter class to show data in list format with recylerer.
+/**
+ * Thus is the list adapter class to show data in list format with recylerer.
+ */
 class AboutAdapter(var about: ArrayList<AboutList>, var context: Context, var itemClickListener: ItemClickListener) : RecyclerView.Adapter<AboutAdapter.AboutViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AboutViewHolder  =
         AboutViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.about_list_row_view,parent,false))
